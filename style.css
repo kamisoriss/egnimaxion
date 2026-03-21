@@ -1,522 +1,216 @@
-/*
-  style.css
-  - Thèmes : arrière-plan sombre, effets lumineux
-  - Barres latérales / header décoratif
-  - Boutons/links avec effets hover/focus/active
-  - Responsive rules for narrower screens
-*/
+/* ==========================================================================
+   1. BASE ET MISE EN PAGE
+   ========================================================================== */
+/* ==========================================================================
+   CAMOUFLAGE DU BOUTON SECRET (COMMENCER.PHP)
+   ========================================================================== */
 
-/* Corps : conteneur centré avec fond sombre pleine hauteur */
+/* On cible la classe level1 pour qu'elle soit totalement invisible */
+.level1 {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: transparent !important; /* Texte invisible */
+  text-shadow: none !important;
+  cursor: default !important;    /* Le curseur ne devient pas une main */
+  outline: none !important;
+  width: 150px;                  /* Garde sa taille pour le clic */
+  height: 50px;
+  padding: 0 !important;
+  appearance: none;
+}
+
+/* On bloque TOUS les effets de survol pour ne pas le trahir */
+.level1:hover,
+.level1:focus,
+.level1:active {
+  background: transparent !important;
+  color: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+/* Rend le texte visible UNIQUEMENT si on le surligne (Ctrl+A) */
+.level1::selection {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff !important;
+}
 body {
   background: #181b1f;
   margin: 0;
-  min-height: 100vh; /* full viewport height */
-  display: block; /* laisser le flux naturel et le scroll */
-}
-/* Superposition d'arrière-plan utilisée pour le SVG décoratif du labyrinthe.
-  pointer-events:none pour rendre non interactif. */
-.maze-bg {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0; /* fond */
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-/* Wrapper générique avec une légère lueur blanche pour le détacher du fond */
-.enigmatic-x {
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 0 8px #fff2);
+  min-height: 100vh;
+  display: block;
+  font-family: 'Orbitron', 'Share Tech Mono', sans-serif;
 }
 
-/* Contenu principal: toujours au-dessus du fond avec un contraste lisible */
+.maze-bg {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .enigmatic-main {
   position: relative;
   z-index: 2;
   color: #e6e6e6;
+  padding: 24px;
+  margin-top: 110px; /* Espace sous le badge */
+  transition: margin-left 0.4s ease;
 }
 
-/* Réserver de la place pour la nav sur toutes largeurs */
-.enigmatic-nav:not(.collapsible) ~ .enigmatic-main {
-  margin-left: 220px; /* nav 200px + marge */
-  padding: 24px;
-  margin-top: 120px; /* espace sous le header fixe */
+/* Marges pour laisser la place à la nav */
+.enigmatic-nav:not(.collapsible) ~ .enigmatic-main { margin-left: 220px; }
+.enigmatic-nav.collapsible ~ .enigmatic-main { margin-left: 64px; }
+.enigmatic-nav.collapsible.expanded ~ .enigmatic-main { margin-left: 220px; }
+
+/* ==========================================================================
+   2. LE HEADER (BADGE EGNIMAXION)
+   ========================================================================== */
+.enigmatic-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  width: max-content;
+  padding: 10px 45px;
+  min-height: 80px;
+  background: linear-gradient(90deg, #23262a 10%, #444 50%, #23262a 90%);
+  border: 2.5px solid #23262a;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 4px 32px #000a, 0 0 0 2px #23262a inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.enigmatic-nav.collapsible ~ .enigmatic-main {
-  margin-left: 64px; /* nav rétractée 48px + marge */
-  padding: 24px;
-  margin-top: 120px; /* espace sous le header fixe */
+
+.enigmatic-header h1,
+.header-bg-puzzle + * {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3.2em; /* Taille originale */
+  letter-spacing: 0.18em;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0 0 24px #fff8, 0 0 8px #fff6, 0 0 2px #fff, 0 2px 12px #23262a;
 }
-/* Navigation latérale (compacte par défaut).
-  - la largeur s'agrandit au survol/focus pour révéler les étiquettes.
-  - positionnée fixe à gauche et hauteur pleine. */
+
+.header-bg-puzzle {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.15;
+}
+
+/* ==========================================================================
+   3. NAVIGATION ET LA FLÈCHE (TOGGLE)
+   ========================================================================== */
 .enigmatic-nav {
   position: fixed;
   top: 0;
   left: 0;
-  width: 200px; /* nav normale par défaut (toujours visible) */
+  width: 200px;
   height: 100vh;
   background: linear-gradient(180deg, #181b1f 80%, #23262a 100%);
   transition: width 0.4s cubic-bezier(.68,-0.55,.27,1.55);
-  z-index: 10;
-  overflow: hidden;
-  box-shadow: 2px 0 16px #000a;
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   padding-top: 40px;
+  box-shadow: 2px 0 16px #000a;
+
+  /* CRITIQUE : Doit être visible pour que la flèche dépasse ! */
+  overflow: visible !important;
 }
-/* Variante rétractable: uniquement là où on l'applique (ex: index) */
-.enigmatic-nav.collapsible {
-  width: 48px; /* largeur réduite par défaut */
-}
-/* Navigation button styles
-   - large clickable area, rounded, with inset shader for depth
-   - text-shadow and subtle glow to match neon aesthetic */
-.enigmatic-nav button {
-  width: 200px;
-  height: 60px;
-  margin: 10px 0;
-  background: #23262a;
-  border: none;
-  border-radius: 16px;
-  color: #e0e0e0;
-  font-size: 1.25em;
-  letter-spacing: 2px;
-  font-family: 'Share Tech Mono', 'Orbitron', 'Unica One', Arial, sans-serif;
-  font-weight: 700;
-  box-shadow: 0 2px 8px #0006, 0 0 0 2px #222 inset; /* depth */
-  transition: box-shadow 0.2s, background 0.2s, color 0.2s;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  overflow: visible;
-  text-shadow: 0 0 8px #fff7, 0 0 2px #fff8;
-  padding-left: 4px;
-  padding-right: 56px; /* room for icons/decoration */
-  gap: 12px;
-  white-space: nowrap;
-}
-/* Toggle visible beside collapsed nav; helps expand on hover/focus */
+
+.enigmatic-nav.collapsible { width: 48px; }
+.enigmatic-nav.expanded { width: 200px !important; }
+
+/* La languette du bouton */
 .nav-toggle {
   position: absolute;
   top: 50%;
-  right: -32px;
+  right: -35px; /* Dépasse du bord de la nav */
   transform: translateY(-50%);
-  width: 128px;
-  height: 64px;
+  width: 40px;
+  height: 70px;
+  background: #23262a;
+  border: 1px solid #444;
+  border-left: none;
+  border-radius: 0 15px 15px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #23262a;
-  border-radius: 0 16px 16px 0;
-  box-shadow: 2px 0 16px #000a;
   cursor: pointer;
-  z-index: 60; /* élevé pour garantir interaction même quand nav est ouverte */
-  /* Transition douce pour l'opacité, la translation, l'arrière-plan et l'ombre
-    afin que la flèche ne disparaisse pas brutalement */
-  transition: background 0.3s ease, opacity 0.35s ease, transform 0.35s ease, box-shadow 0.3s ease;
-  will-change: opacity, transform;
+  z-index: 110;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.5);
 }
+
+/* La flèche blanche › */
 .nav-toggle .arrow {
-  font-size: 2em;
-  color: #e0e0e0;
-  filter: drop-shadow(0 0 6px #fff6);
-  /* Durées plus longues pour rendre le fondu bien visible */
-  transition: color 0.25s ease, opacity 0.85s ease, transform 0.65s ease;
+  font-size: 2.5em;
+  color: #ffffff !important; /* Blanc pur forcé */
+  font-family: Arial, sans-serif;
+  line-height: 0;
+  transition: transform 0.4s ease;
+  opacity: 1 !important; /* Toujours visible */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
-/* Masquer la flèche sur les nav non rétractables */
-.enigmatic-nav:not(.collapsible) .nav-toggle {
-  display: none;
+
+/* Retourne la flèche quand on ouvre */
+.enigmatic-nav.expanded .nav-toggle .arrow {
+  transform: rotate(180deg);
 }
-/* Cacher la flèche quand la nav est ouverte (classe expanded) ou au survol */
-.enigmatic-nav.collapsible.expanded .nav-toggle {
-  /* On garde le conteneur visible pour permettre à la flèche de fondre en douceur */
-  opacity: 1;
-  background: transparent;
-  box-shadow: none;
-  /* laisser le toggle cliquable pour refermer proprement */
-  pointer-events: auto;
-  transform: none; /* ne pas déplacer la flèche pour éviter les mouseleave involontaires */
+
+/* ==========================================================================
+   4. BOUTONS DE NAVIGATION
+   ========================================================================== */
+.nav-content {
+  transition: opacity 0.3s;
+  overflow: hidden;
 }
-/* Quand le menu rétractable s'ouvre, faire fondre la flèche elle-même */
-.enigmatic-nav.collapsible.expanded .nav-toggle .arrow {
+
+.enigmatic-nav.collapsible:not(.expanded) .nav-content {
   opacity: 0;
-  transform: translateX(6px);
-  /* Légère temporisation pour laisser la flèche visible un instant avant le fondu */
-  transition-delay: 0s, 0.12s, 0.12s; /* color, opacity, transform */
-}
-/* Suppression de l'ouverture pure CSS au survol: l'ouverture est gérée par JS (.expanded) et
-   par :focus-within pour le clavier afin d'éviter tout flicker ou conflit. */
-/* Decorative pseudo-element used to draw an SVG/icon behind each button label */
-.enigmatic-nav button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
   pointer-events: none;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 90% 90%;
-  opacity: 0.32;
 }
-/* Effet lumineux : hover uniquement */
-/* Hover: increase glow and contrast to highlight the button */
-.enigmatic-nav button:hover {
-  background: #23262a !important;
-  color: #fff !important;
-  box-shadow: 0 0 18px #fff6, 0 2px 8px #0006 !important;
-  text-shadow: 0 0 16px #fff, 0 0 2px #fff !important;
-  transform: none !important;
-  transition: box-shadow 0.2s, background 0.2s, color 0.2s;
-}
-/* Anchor links inside nav - styled as pill buttons */
-.enigmatic-nav a {
+
+.enigmatic-nav button {
+  width: 180px;
+  height: 50px;
+  margin: 10px;
+  background: #23262a;
+  border: none;
+  border-radius: 12px;
+  color: #e0e0e0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #e0e0e0;
-  text-decoration: none;
-  transition: color 0.2s, box-shadow 0.2s, background 0.2s, text-shadow 0.2s;
-  background: #181b1f;
-  border-radius: 16px;
-  margin: 8px 0 18px 0; 
-  position: relative;
-}
-/* When the nav or toggle is hovered/focused, expand to show labels */
-.enigmatic-nav.collapsible:focus-within {
-  width: 200px;
-  transition: width 0.4s cubic-bezier(.68,-0.55,.27,1.55);
-}
-
-/* Etat 'ouvert' contrôlé par JS : pour la nav rétractable uniquement */
-.enigmatic-nav.collapsible.expanded {
-  width: 200px !important;
-}
-.enigmatic-nav.collapsible.expanded ~ .enigmatic-main {
-  margin-left: 220px; /* aligner le contenu à droite de la nav ouverte */
-}
-.nav-content {
-  opacity: 1; /* Par défaut (nav normale), le contenu est visible */
-  transition: opacity 0.2s;
-  pointer-events: all;
-}
-/* Masquer la barre de défilement pour la nav étroite */
-.enigmatic-nav::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
-.enigmatic-nav.collapsible .nav-content {
-  opacity: 0; /* caché quand la nav est réduite */
-  pointer-events: none;
-}
-.enigmatic-nav.collapsible:focus-within .nav-content,
-.enigmatic-nav.collapsible.expanded .nav-content {
-  opacity: 1; /* révéler les étiquettes et le contenu */
-  pointer-events: all;
-}
-/* Désactivation des règles globales pour éviter que les autres pages deviennent rétractables */
-
-.enigmatic-nav a:hover {
-  color: #fff !important;
-  background: #181b1f !important;
-  box-shadow: 0 0 18px #fff6, 0 2px 8px #0006 !important;
-  text-shadow: 0 0 16px #fff, 0 0 2px #fff !important;
-  transition: box-shadow 0.2s, background 0.2s, color 0.2s, text-shadow 0.2s;
-}
-
-.enigmatic-nav a:active {
-  color: #e0e0e0;
+  gap: 15px;
+  padding-left: 12px;
+  cursor: pointer;
+  font-family: 'Share Tech Mono', sans-serif;
   box-shadow: 0 2px 8px #0006, 0 0 0 2px #222 inset;
-  text-shadow: 0 0 8px #fff7, 0 0 2px #fff8;
-  background: #23262a; /* pressed state */
+  transition: 0.2s;
 }
 
-/* Effet enfoncé et lumineux renforcé : hover + active uniquement */
-/* Lueur renforcée + translation subtile pour simuler l'appui lors du hover */
-.enigmatic-nav button:hover:active {
-  background: #23262a !important;
-  color: #fff !important;
-  box-shadow: 0 0 36px #fff, 0 0 24px #fff6, 0 2px 16px #000a !important;
-  text-shadow: 0 0 32px #fff, 0 0 8px #fff !important;
-  transform: translateY(2px) scale(0.97) !important;
-  transition: transform 0.08s, box-shadow 0.08s, background 0.08s;
-}
-.enigmatic-nav a:active {
-  color: #ccc;
-  text-shadow: none;
-}
-
-.enigmatic-nav a:focus {
-  outline: none;
-  text-shadow: 0 0 8px #fff7, 0 0 2px #fff8; /* accessible focus indicator without changing layout */
-}
-/* Focus ne doit pas changer l'effet */
-/* Garder le style de focus accessible mais éviter l'outline par défaut */
-.enigmatic-nav button:focus {
-  outline: none;
-}
-/* Supprimer tout effet d'enfoncement hors hover */
-.enigmatic-nav button:active {
-  background: #23262a;
-  color: #e0e0e0;
-  box-shadow: 0 2px 8px #0006, 0 0 0 2px #222 inset;
-  text-shadow: 0 0 8px #fff7, 0 0 2px #fff8;
-  transform: none; /* neutral pressed state outside hover */
-}
-/* Décor SVG/arrière-plan dans les boutons - non interactif */
-.btn-bg-puzzle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  display: block;
-}
-.enigmatic-nav button > span:not(.nav-icon):not(.nav-blank) {
-  position: relative;
-  z-index: 1; /* ensure label sits above decorative ::before */
-}
-.enigmatic-nav .nav-icon {
-  position: relative;
-  z-index: 2;
-  font-size: 2em; /* icon size inside button */
-  margin-bottom: 0;
-  filter: drop-shadow(0 0 4px #fff2);
-  flex-shrink: 0;
-}
-.enigmatic-nav .connexion {
-  position: relative;
-  width: 208px;
-  height: auto; 
-}
-
-.enigmatic-nav .nav-blank {
-  font-size: 2em;
-  color: #444;
-  opacity: 0.5;
-  margin-left: 2px;
-  filter: blur(0.5px) drop-shadow(0 0 6px #fff2);
-}
-/* Entête centré en haut avec aspect néon/métallique
-  - pointer-events none car c'est décoratif */
-.enigmatic-header {
-  position: fixed;
-  top: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-  font-family: 'Orbitron', 'Unica One', 'Share Tech Mono', Arial, sans-serif;
-  font-size: 3.2em;
-  letter-spacing: 0.18em;
+.enigmatic-nav button:hover {
+  background: #2b2e33;
   color: #fff;
-  text-shadow: 0 0 24px #fff8, 0 0 8px #fff6, 0 0 2px #fff, 0 2px 12px #23262a;
-  background: linear-gradient(90deg, #23262a 10%, #444 50%, #23262a 90%);
-  border-radius: 18px;
-  padding: 0.18em 1.2em 0.12em 1.2em;
-  border: 2.5px solid #23262a;
-  box-shadow: 0 4px 32px #000a, 0 0 0 2px #23262a inset;
-  text-transform: uppercase;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.97;
-  overflow: visible;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
 }
-.header-bg-puzzle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  display: block;
-}
-.enigmatic-header svg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-.enigmatic-header {
-  position: fixed;
-  /* ...existing code... */
-  /* Ajout d'un contexte de positionnement pour le SVG décoratif */
-}
-.enigmatic-header span.header-bg-puzzle + * {
-  position: relative;
-  z-index: 1; /* keep visible text above decorative background */
-}
-.enigmatic-nav button[title="Contact"]::before {
-  background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 20 q-5 5 0 10 q5 5 10 0 q-2.5 -2.5 0 -5 q2.5 -2.5 0 -5 q-5 -5 -10 0 Z" fill="%2323262a" stroke="%23444" stroke-width="1.2"/><path d="M40 40 q-4 4 0 8 q4 4 8 0 q-2 -2 0 -4 q2 -2 0 -4 q-4 -4 -8 0 Z" fill="%2323262a" stroke="%23444" stroke-width="1.2"/></svg>');
-}
-.enigmatic-nav button[title="Commencer"]::before {
-  background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12 q-4 4 0 8 q4 4 8 0 q-2 -2 0 -4 q2 -2 0 -4 q-4 -4 -8 0 Z" fill="%2323262a" stroke="%23444" stroke-width="1.2"/><path d="M48 48 q-3 3 0 6 q3 3 6 0 q-1.5 -1.5 0 -3 q1.5 -1.5 0 -3 q-3 -3 -6 0 Z" fill="%2323262a" stroke="%23444" stroke-width="1.2"/></svg>');
-}
-.enigmatic-nav button[title="Boutique"]::before {
-  background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 45 q-5 5 0 10 q5 5 10 0 q-2.5 -2.5 0 -5 q2.5 -2.5 0 -5 q-5 -5 -10 0 Z" fill="%2323262a" stroke="%23444" stroke-width="1.2"/><path d="M45 15 q-4 4 0 8 q4 4 8 0 q-2 -2 0 -4 q2 -2 0 -4 q-4 -4 -8 0 Z" fill="%2323262a" stroke="%23444" stroke-width="1.2"/></svg>');
-}
-.enigmatic-nav button.nav-blank::before {
-  background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 30 q-5 5 0 10 q5 5 10 0 q-2.5 -2.5 0 -5 q2.5 -2.5 0 -5 q-5 -5 -10 0 Z" fill="%2323262a" stroke="%23444" stroke-width="1.2"/></svg>');
-}
-.enigmatic-nav button > span {
-  position: relative;
-  z-index: 1;
-}
-/* Règles responsive : adapter la nav/l'entête pour écrans plus petits
-  - À <=768px la nav devient une barre supérieure et les boutons se replient
-  - À <=480px les boutons prennent presque toute la largeur */
+
+.nav-icon { font-size: 1.8em; }
+
+/* ==========================================================================
+   5. RESPONSIVE MOBILE
+   ========================================================================== */
 @media (max-width: 768px) {
-  /* Conserver une nav latérale à gauche sur mobile */
-  .enigmatic-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 150px;
-    height: 100vh;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding-top: 40px;
-    border-right: 2px solid #23262a;
-    border-bottom: none;
-    box-shadow: 2px 0 16px #000a;
-    overflow-y: auto;
-  }
-
-  .enigmatic-header {
-    font-size: clamp(1.2rem, 4vw, 2rem);
-    position: fixed; /* aligné à gauche du contenu */
-    top: 32px;
-    left: 170px; /* nav 150 + 20 d'écart */
-    right: 12px; /* contrainte pour éviter de sortir de l'écran */
-    transform: none;
-    padding: 0.2em 0.8em;
-    margin: 0;
-    width: auto;
-    text-align: left;
-    max-width: calc(100vw - 182px);
-    box-sizing: border-box;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-  .maze-bg {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Forcer affichage du contenu dans nav rétractable en mobile */
-  .enigmatic-nav.collapsible .nav-content {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  /* Adapter largeur des boutons et marge du contenu pour nav réduite */
-  .enigmatic-nav button {
-    width: 150px;
-    height: auto;
-    white-space: normal; /* permettre le retour à la ligne */
-    text-align: left;
-    line-height: 1.2;
-    font-size: clamp(0.85rem, 2.6vw, 1rem);
-    padding: 10px 12px 10px 8px;
-  }
-  .enigmatic-nav:not(.collapsible) ~ .enigmatic-main { margin-left: 170px; }
-}
-.level1{
-  /* Fully transparent so the button does not draw a solid block */
-  background: transparent !important;
-  color: transparent !important; /* hide its text content by default */
-  width: 150px;
-  height: 50px;
-  border-radius: 30px;
-  border: none !important;
-  box-shadow: none !important;
-  user-select: text; /* allow Ctrl+A selection to reveal injected label */
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  padding: 0; /* avoid extra background areas from padding */
-}
-
-/* Remove any decorative pseudo-elements that might make the button visible */
-.level1::before,
-.level1::after {
-  display: none !important;
-  content: none !important;
-}
-
-/* Keep a visible focus/hover for accessibility if user tabs to it */
-.level1:focus,
-.level1:hover {
-  outline: none;
-  background: rgba(255,255,255,0.02) !important; /* slight reveal on hover/focus */
-  color: #e6e6e6 !important;
-}
-
-/* Utility: keep label inline and transparent but make it visible when selected
-   (avoids clipping so Ctrl+A can select even over decorative backgrounds) */
-.sr-only-selectable {
-  display: inline !important;
-  position: static !important;
-  width: auto !important;
-  height: auto !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: visible !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-  color: transparent !important; /* invisible normally */
-  user-select: text !important; /* allow selection */
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-}
-
-/* When the hidden label is selected, force a visible color and a subtle selection background */
-.level1-label::selection,
-.sr-only-selectable::selection {
-  color: #e6e6e6 !important; /* visible text on selection */
-  background: rgba(255,255,255,0.12) !important;
-}
-
-/* Improve keyboard visibility: show label on focus of the button */
-.level1:focus .level1-label,
-.level1:hover .level1-label {
-  color: rgba(230,230,230,0.02) !important; /* still near-invisible but slightly revealed on hover/focus */
-}
-
-@media (max-width: 480px) {
-  .enigmatic-nav { width: 120px; overflow-y: auto; }
-  .enigmatic-nav button {
-    width: 120px;
-    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
-    padding: 8px 10px 8px 6px;
-  }
-  .enigmatic-header {
-    left: 140px;
-    right: 8px;
-    font-size: clamp(1.1rem, 4.8vw, 1.6rem);
-    max-width: calc(100vw - 148px);
-    box-sizing: border-box;
-  }
-  .enigmatic-nav:not(.collapsible) ~ .enigmatic-main { margin-left: 140px; }
-}
-
-/* Suppression du mode barre supérieure: on garde la nav à gauche même très petit */
-
-/* Desktop et tablettes larges: décaler le centrage du header
-   pour éviter le chevauchement visuel avec la nav latérale (200px). */
-@media (min-width: 769px) {
-  .enigmatic-header {
-    left: calc(50% + 100px); /* centre de la zone (viewport - 200px) */
-  }
+  .enigmatic-header h1 { font-size: 1.6em; }
+  .enigmatic-header { width: 85%; padding: 5px 15px; min-height: 60px; }
+  .enigmatic-nav.collapsible { width: 0; }
+  .nav-toggle { display: none; }
 }
