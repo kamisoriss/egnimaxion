@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ed20f922-1cae-42fd-a64b-1279e941c513" name="ionos">
+        <fileTransfer rootFolder="/public" accessType="SFTP" host="access-5018762512.webspace-host.com" port="22" sshConfigId="4be106b8-126e-4b14-89a9-6c220d42b109" sshConfig="su162337@access-5018762512.webspace-host.com:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

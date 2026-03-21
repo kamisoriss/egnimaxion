@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteCond %{SERVER_PORT}
+!=443
+RewriteRule ^(.*)$
+https://egnimaxion.kamisoris.fr/$1
+[R=301,L]
