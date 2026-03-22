@@ -1,6 +1,20 @@
 <?php
-session_start();
+$isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
 
+session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => $_SERVER['HTTP_HOST'],
+        'secure' => $isSecure, // <-- Devient true en HTTPS, et false en HTTP !
+        'httponly' => true,
+        'samesite' => 'Lax' // 'Lax' est plus souple si tu passes de HTTP à HTTPS
+]);
+session_start();
+$_SESSION['last_activity'] = time();
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['level1_completed'] = false;
+    // Optionnel : session_destroy(); // Si tu veux vraiment tout effacer
+}
 // --- 1. LE CERVEAU (LOGIQUE DE PASSAGE AU NIVEAU 2) ---
 // On vérifie si le formulaire que tu m'as montré a été envoyé
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unlock') {
@@ -23,15 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unloc
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-
+<div class="maze-bg"></div>
 <?php include ('../nav.php'); ?>
-
-<svg class="maze-bg" viewBox="0 0 400 400">
-    <circle cx="200" cy="200" r="180" fill="none" stroke="#23262a" stroke-width="16" />
-    <circle cx="200" cy="200" r="140" fill="none" stroke="#23262a" stroke-width="8" />
-    <path d="M60,200 Q200,60 340,200 Q200,340 60,200 Z" fill="none" stroke="#23262a" stroke-width="6" />
-    <path d="M200,60 Q340,200 200,340 Q60,200 200,60 Z" fill="none" stroke="#23262a" stroke-width="6" />
-</svg>
 <header class="enigmatic-header">
     <span class="header-bg-puzzle">
   </span>

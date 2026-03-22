@@ -1,10 +1,31 @@
 <?php
+$isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+
+session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => $_SERVER['HTTP_HOST'],
+        'secure' => $isSecure, // <-- Devient true en HTTPS, et false en HTTP !
+        'httponly' => true,
+        'samesite' => 'Lax' // 'Lax' est plus souple si tu passes de HTTP à HTTPS
+]);
 session_start();
 // Si le joueur n'a pas fini le niveau 1, on le renvoie au début
 if (!($_SESSION['level1_completed'] ?? false)) {
     header('Location: commencer.php');
     exit;
 }
+// 2. LE CHRONOMÈTRE ANTI-TRICHE (ex: 2 heures = 7200 secondes)
+$timeout = 7200;
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
+    // S'il s'est écoulé trop de temps, on le vire !
+    session_unset();
+    session_destroy();
+    header('Location: commencer.php');
+    exit;
+}
+// 3. On met à jour l'heure à chaque fois qu'il actualise ou joue
+$_SESSION['last_activity'] = time();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,6 +38,7 @@ if (!($_SESSION['level1_completed'] ?? false)) {
   <link rel="stylesheet" href="../normalize.css">
 </head>
 <body>
+<div class="maze-bg"></div>
 <header class="enigmatic-header">
     <span class="header-bg-puzzle">
   </span>
@@ -25,12 +47,6 @@ if (!($_SESSION['level1_completed'] ?? false)) {
 <?php
 include ('../nav.php');
 ?>
-  <svg class="maze-bg" viewBox="0 0 400 400">
-  <circle cx="200" cy="200" r="180" fill="none" stroke="#23262a" stroke-width="16" />
-  <circle cx="200" cy="200" r="140" fill="none" stroke="#23262a" stroke-width="8" />
-  <path d="M60,200 Q200,60 340,200 Q200,340 60,200 Z" fill="none" stroke="#23262a" stroke-width="6" />
-  <path d="M200,60 Q340,200 200,340 Q60,200 200,60 Z" fill="none" stroke="#23262a" stroke-width="6" />
-</svg>
   <main class="enigmatic-main">
     <h1>niveau 2</h1>
     <p>Bienvenue au niveau 2 </p>

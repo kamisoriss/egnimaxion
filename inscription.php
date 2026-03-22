@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="normalize.css">
 </head>
 <body>
+<div class="maze-bg"></div>
 <header class="enigmatic-header">
     <header class="enigmatic-header">
         <span class="header-bg-puzzle">
@@ -19,12 +20,6 @@
 <?php
 include ('nav.php');
 ?>
-<svg class="maze-bg" viewBox="0 0 400 400">
-	<circle cx="200" cy="200" r="180" fill="none" stroke="#23262a" stroke-width="16" />
-	<circle cx="200" cy="200" r="140" fill="none" stroke="#23262a" stroke-width="8" />
-	<path d="M60,200 Q200,60 340,200 Q200,340 60,200 Z" fill="none" stroke="#23262a" stroke-width="6" />
-	<path d="M200,60 Q340,200 200,340 Q60,200 200,60 Z" fill="none" stroke="#23262a" stroke-width="6" />
-</svg>
 <main class="enigmatic-main">
 	<h1>Créer un compte</h1>
 	<form class="signup-form" action="inscription.php" method="post">

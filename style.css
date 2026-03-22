@@ -98,7 +98,18 @@ body {
   text-transform: uppercase;
   text-shadow: 0 0 24px #fff8, 0 0 8px #fff6, 0 0 2px #fff, 0 2px 12px #23262a;
 }
-
+.maze-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('img/maze-bg.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
 .header-bg-puzzle {
   position: absolute;
   inset: 0;
