@@ -62,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unloc
         <div>CSRF token: <?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?></div>
     </div>
 <?php endif; ?>
-
-<script src="../nav.js"></script>
 </body>
+<script src="../nav.js"></script>
 </html>

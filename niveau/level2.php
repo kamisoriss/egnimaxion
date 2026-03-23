@@ -30,8 +30,8 @@ $_SESSION['last_activity'] = time();
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Niveau 2 - EGNIMAXION</title>
   <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
@@ -51,6 +51,6 @@ include ('../nav.php');
     <h1>niveau 2</h1>
     <p>Bienvenue au niveau 2 </p>
   </main>
-  <script src="../nav.js"></script>
 </body>
+<script src="../nav.js"></script>
 </html>

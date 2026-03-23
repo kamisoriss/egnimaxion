@@ -37,22 +37,13 @@
   color: #fff !important;
 }
 body {
+  display: flex;
+  flex-direction: column;
   background: #181b1f;
   margin: 0;
   min-height: 100vh;
-  display: block;
   font-family: 'Orbitron', 'Share Tech Mono', sans-serif;
 }
-
-.maze-bg {
-  position: absolute;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-}
-
 .enigmatic-main {
   position: relative;
   z-index: 2;
@@ -60,6 +51,7 @@ body {
   padding: 24px;
   margin-top: 110px; /* Espace sous le badge */
   transition: margin-left 0.4s ease;
+  flex: 1;
 }
 
 /* Marges pour laisser la place à la nav */
@@ -189,8 +181,7 @@ body {
   opacity: 0;
   pointer-events: none;
 }
-
-.enigmatic-nav button {
+.nav-btn-link {
   width: 180px;
   height: 50px;
   margin: 10px;
@@ -198,24 +189,76 @@ body {
   border: none;
   border-radius: 12px;
   color: #e0e0e0;
-  display: flex;
-  align-items: center;
+  display: flex;            /* Aligne icône et texte sur la même ligne */
+  align-items: center;      /* Centre verticalement */
   gap: 15px;
   padding-left: 12px;
-  cursor: pointer;
   font-family: 'Share Tech Mono', sans-serif;
+  text-decoration: none !important; /* FORCE la suppression du souligné */
   box-shadow: 0 2px 8px #0006, 0 0 0 2px #222 inset;
   transition: 0.2s;
+  cursor: pointer;
 }
-
-.enigmatic-nav button:hover {
+.nav-btn-link span {
+  text-decoration: none;
+}
+.nav-btn-link:hover {
   background: #2b2e33;
   color: #fff;
+  text-decoration: none !important;
   box-shadow: 0 0 15px rgba(255,255,255,0.2);
 }
-
 .nav-icon { font-size: 1.8em; }
+footer{
+  display: flex;
+  height: 100px;
+  width: auto;
+  margin-top: auto;
+  box-shadow: #111111 2px 2px 20px;
+  background-color: #1c1c1c;
+  }
+.legal-link {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 20px;
+  color: #a8a8a8;
+  text-decoration-style: solid;
+  padding-left: 50px;
+  transition: color 0.3s;
+  display: block;
+}
+.contact-mail {
+  color: #a8a8a8 !important; /* Utilise la même couleur que ton texte */
+  text-decoration: underline; /* Garde le trait pour qu'on sache que c'est un lien */
+  text-underline-offset: 3px;
+  transition: 0.3s;
+}
+/* Agit uniquement sur les paragraphes et les listes */
+p, li {
+  line-height: 1.7;    /* Donne de l'air entre chaque ligne de texte */
+  margin-bottom: 1.5em; /* Espace les blocs de texte entre eux */
+  font-size: 0.95rem;  /* Ajuste légèrement la taille pour le confort */
+}
 
+/* Agit uniquement sur les titres de section */
+h2 {
+  margin-top: 2.5em;    /* Sépare bien le titre du paragraphe précédent */
+  margin-bottom: 0.8em; /* Colle le titre à son texte correspondant */
+  color: #ffffff;
+}
+
+/* Agit sur l'espacement des points de la liste (cookies) */
+ul li {
+  margin-bottom: 8px;
+  margin-left: 25px;
+}
+
+/* Pour que les mots ne soient pas trop serrés */
+p {
+  letter-spacing: 0.5px;
+}
+.contact-mail:hover {
+  color: #ffffff !important; /* Devient blanc quand on passe la souris dessus */
+}
 /* ==========================================================================
    5. RESPONSIVE MOBILE
    ========================================================================== */

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>  EGNIMAXION</title>
     <link rel="stylesheet" href="normalize.css">
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -26,10 +26,10 @@ include ('nav.php');
   <p>Ne pas oubliez de vous inscrire ou de vous connecter pour accéder à toutes les fonctionnalités du site.</p>
 </main>
 
-</body>
-</html>
 
-<!-- script navigation -->
+<footer>
+</body>
+    <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
+</footer>
 <script src="nav.js"></script>
-<?php
-?>
+</html>

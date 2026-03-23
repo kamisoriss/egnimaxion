@@ -14,9 +14,17 @@ $root = str_repeat('../', $depth);
         <span class="arrow">&rsaquo;</span>
     </div>
     <div class="nav-content">
-        <button title="Accueil" onclick="location.href='<?= $root ?>index.php'"><span class="nav-icon">🏠</span><span>Accueil</span></button>
-        <button title="Contact" onclick="location.href='<?= $root ?>contact.php'"><span class="nav-icon">✉️</span><span>Contact</span></button>
-        <button title="Commencer" onclick="location.href='<?= $root ?>niveau/commencer.php'"><span class="nav-icon">🧩</span><span>Commencer</span></button>
-        <button title="Boutique" onclick="location.href='<?= $root ?>boutique.php'"><span class="nav-icon">🛒</span><span>Boutique</span></button>
+        <a href="<?= $root ?>index.php" class="nav-btn-link" title="Accueil">
+            <span class="nav-icon">🏠</span><span>Accueil</span>
+        </a>
+        <a href="<?= $root ?>contact.php" class="nav-btn-link" title="Contact">
+            <span class="nav-icon">✉️</span><span>Contact</span>
+        </a>
+        <a href="<?= $root ?>niveau/commencer.php" class="nav-btn-link" title="Commencer">
+            <span class="nav-icon">🧩</span><span>Commencer</span>
+        </a>
+        <a href="<?= $root ?>boutique.php" class="nav-btn-link" title="Boutique">
+            <span class="nav-icon">🛒</span><span>Boutique</span>
+        </a>
     </div>
 </nav>
