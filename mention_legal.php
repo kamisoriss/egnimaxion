@@ -55,6 +55,12 @@ include ('nav.php');
             <h2>5. Responsabilité</h2>
             <p>L'éditeur ne pourra être tenu responsable des dommages directs ou indirects causés au matériel de l’utilisateur lors de l’accès au site, ou de l’apparition d’un bug ou d’une incompatibilité.</p>
         </section>
+        <section>
+            <h2>6. Boutique virtuelle et Monnaie de jeu</h2>
+            <p>Le site peut proposer une "boutique" utilisant une monnaie virtuelle propre au jeu EGNIMAXION.
+                <br>Cette monnaie est obtenue exclusivement par la progression dans les énigmes et n'a <strong>aucune valeur monétaire réelle</strong>.
+                Elle ne peut en aucun cas être convertie, remboursée ou échangée contre de l'argent réel ou des biens matériels.</p>
+        </section>
     </div>
 </main>
 <footer>
