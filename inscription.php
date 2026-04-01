@@ -7,31 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="normalize.css">
+    <script src="script/audio.js"></script>
 </head>
 <body>
 <div class="maze-bg"></div>
 <header class="enigmatic-header">
-    <header class="enigmatic-header">
-        <span class="header-bg-puzzle">
-  </span>
+    <span class="header-bg-puzzle">
+        <audio id="musique-fond" src="assets/sound/egnimaxion_backsound.mp3" loop></audio>
+    </span>
         <h1>inscription</h1>
     </header>
-</header>
 <?php
 include ('nav.php');
 ?>
 <main class="enigmatic-main">
 	<h1>Créer un compte</h1>
-	<form class="signup-form" action="inscription.php" method="post">
-		<label for="username">Pseudo</label>
-		<input id="username" name="username" type="text" required />
-
-		<label for="email">Email</label>
-		<input id="email" name="email" type="email" required />
-
-		<label for="password">Mot de passe</label>
-		<input id="password" name="password" type="password" required />
-
+	<form class="inscription" action="" method="post">
+		<label>Pseudo<br><input id="username" name="username" type="text" required /></label>
+		<label >Email<br><input id="email" name="email" type="email" required /></label>
+		<label >Mot de passe<br><input id="password" name="password" type="password" required /></label>
+        <label>Confirmation mot de passe<br><input type="password" name="confirm_password" required></label>
 		<button type="submit">S'inscrire</button>
 	</form>
 </main>
@@ -40,7 +35,7 @@ include ('nav.php');
 </html>
 
 <!-- script navigation -->
-<script src="nav.js"></script>
+<script src="script/nav.js"></script>
 
 <?php
 

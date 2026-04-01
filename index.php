@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="normalize.css">
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="script/audio.js"></script>
 </head>
 <body>
 <div class="maze-bg"></div>
 <header class="enigmatic-header">
     <span class="header-bg-puzzle">
+        <audio id="musique-fond" src="assets/sound/egnimaxion_backsound.mp3" loop></audio>
   </span>
     <h1>EGNIMAXION</h1>
 </header>
@@ -31,5 +33,5 @@ include ('nav.php');
 </body>
     <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
 </footer>
-<script src="nav.js"></script>
+<script src="script/nav.js"></script>
 </html>

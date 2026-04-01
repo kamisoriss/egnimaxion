@@ -44,16 +44,35 @@ body {
   min-height: 100vh;
   font-family: 'Orbitron', 'Share Tech Mono', sans-serif;
 }
+.enigmatic-main.mode-niveau {
+  max-width: none !important; /* On détruit la limite des 900px de force ! */
+  margin-right: 40px !important; /* On garde juste une petite marge à droite */
+  min-height: 80vh !important; /* On force la boîte à descendre presque jusqu'en bas */
+}
 .enigmatic-main {
   position: relative;
   z-index: 2;
   color: #e6e6e6;
-  padding: 24px;
-  margin-top: 110px; /* Espace sous le badge */
-  transition: margin-left 0.4s ease;
+  padding: 40px;
+  margin-top: 130px;
+  margin-bottom: 50px;
+  transition: margin 0.4s ease;
   flex: 1;
-}
 
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 15px;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  max-width: 900px;
+}
+.enigmatic-nav.collapsible ~ .enigmatic-main {
+  margin-left: 100px; /* Menu plié + espace */
+  margin-right: 60px;
+}
+.enigmatic-nav.collapsible.expanded ~ .enigmatic-main {
+  margin-left: 260px;
+  margin-right: 60px;
+}
 /* Marges pour laisser la place à la nav */
 .enigmatic-nav:not(.collapsible) ~ .enigmatic-main { margin-left: 220px; }
 .enigmatic-nav.collapsible ~ .enigmatic-main { margin-left: 64px; }
@@ -71,13 +90,14 @@ body {
   width: max-content;
   padding: 10px 45px;
   min-height: 80px;
-  background: linear-gradient(90deg, #23262a 10%, #444 50%, #23262a 90%);
-  border: 2.5px solid #23262a;
   border-radius: 0 0 18px 18px;
-  box-shadow: 0 4px 32px #000a, 0 0 0 2px #23262a inset;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid #00ffff;
+  border-top: none!important;
+  box-shadow: 0 0 20px rgba(0,255,255,0.4);
+  background-color: rgba(0,0,0,0.75);
 }
 
 .enigmatic-header h1,
@@ -95,20 +115,15 @@ body {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('img/maze-bg.svg');
+  background-image: url('assets/img/maze-bg.jpg');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 50%;
+  /* Fini le zoom géant ! L'image prend 100% de la HAUTEUR de l'écran */
+  background-size: auto 100%;
+  background-color: #0b1116; /* Un bleu/noir très sombre pour remplir les côtés vides */
   z-index: -1;
   pointer-events: none;
 }
-.header-bg-puzzle {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.15;
-}
-
 /* ==========================================================================
    3. NAVIGATION ET LA FLÈCHE (TOGGLE)
    ========================================================================== */
@@ -214,8 +229,10 @@ footer{
   height: 100px;
   width: auto;
   margin-top: auto;
-  box-shadow: #111111 2px 2px 20px;
   background-color: #1c1c1c;
+  border-top: 3px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0,255,255,0.4);
+  background-color: rgba(0,0,0,0.75);
   }
 .legal-link {
   font-family: 'Share Tech Mono', monospace;

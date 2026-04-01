@@ -35,16 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unloc
     <meta charset="UTF-8">
     <title>Niveau 1 - EGNIMAXION</title>
     <link rel="stylesheet" href="../style.css">
+    <script src="../script/audio.js"></script>
 </head>
 <body>
 <div class="maze-bg"></div>
 <?php include ('../nav.php'); ?>
 <header class="enigmatic-header">
     <span class="header-bg-puzzle">
+        <audio id="musique-fond" src="../assets/sound/egnimaxion_backsound.mp3" loop></audio>
   </span>
     <h1>level 1</h1>
 </header>
-<main class="enigmatic-main">
+<main class="enigmatic-main mode-niveau">
     <h1>niveau 1</h1>
 
     <form method="post" action="commencer.php" style="display:inline;">
@@ -63,5 +65,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unloc
     </div>
 <?php endif; ?>
 </body>
-<script src="../nav.js"></script>
+<script src="../script/nav.js"></script>
 </html>

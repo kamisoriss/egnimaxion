@@ -6,13 +6,15 @@
     <link rel="stylesheet" href="normalize.css">
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="script/audio.js"></script>
     <title>mention légal</title>
 </head>
 <body>
 <div class="maze-bg"></div>
 <header class="enigmatic-header">
     <span class="header-bg-puzzle">
-  </span>
+        <audio id="musique-fond" src="assets/sound/egnimaxion_backsound.mp3" loop></audio>
+    </span>
     <h1>EGNIMAXION</h1>
 </header>
 <?php
@@ -61,11 +63,16 @@ include ('nav.php');
                 <br>Cette monnaie est obtenue exclusivement par la progression dans les énigmes et n'a <strong>aucune valeur monétaire réelle</strong>.
                 Elle ne peut en aucun cas être convertie, remboursée ou échangée contre de l'argent réel ou des biens matériels.</p>
         </section>
+        <section>
+            <h2>7. Crédits multimédias</h2>
+            <p><br>L'ambiance musicale et certaines illustrations présentes sur le site Egnimaxion ont été créées à l'aide de l'intelligence artificielle (modèles génératifs de Google Gemini).
+                <br>Elles sont utilisées à des fins d'illustration et d'immersion pour les énigmes du jeu.</p>
+        </section>
     </div>
 </main>
 <footer>
 </body>
 <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
 </footer>
-<script src="nav.js"></script>
+<script src="script/nav.js"></script>
 </html>

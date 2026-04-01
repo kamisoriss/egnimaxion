@@ -12,12 +12,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="normalize.css">
+    <script src="script/audio.js"></script>
 </head>
 <body>
 <div class="maze-bg"></div>
 <header class="enigmatic-header">
     <span class="header-bg-puzzle">
-  </span>
+        <audio id="musique-fond" src="assets/sound/egnimaxion_backsound.mp3" loop></audio>
+    </span>
     <h1>boutique</h1>
 </header>
 <?php
@@ -30,4 +32,4 @@ include ('nav.php');
 </html>
 
 <!-- script navigation -->
-<script src="nav.js"></script>
+<script src="script/nav.js"></script>
