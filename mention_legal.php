@@ -70,9 +70,28 @@ include ('nav.php');
         </section>
     </div>
 </main>
+<div id="controles-volume">
+    <button id="bouton-mute">
+        <img src="assets/img/soundplay.png" alt="Volume" id="icone-volume-on" class="icone show" draggable="false">
+        <img src="assets/img/soundstop.png" alt="Mute" id="icone-volume-off" class="icone" draggable="false">
+    </button>
+
+    <div class="curseur-piste" id="volume-piste">
+        <img src="assets/img/soundbar.png" alt="Piste" class="piste-vide" draggable="false">
+
+        <div class="remplissage-barre" id="remplissage-barre">
+            <img src="assets/img/soundbarfill.png" alt="Remplissage" class="barre-pleine" draggable="false">
+        </div>
+
+        <img src="assets/img/soundbarcursor.png" alt="Curseur" class="curseur-rond" id="curseur-rond" draggable="false">
+    </div>
+
+    <span id="volume-texte">15%</span>
+</div>
+
 <footer>
-</body>
-<ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
+
+    <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
 </footer>
 <script src="script/nav.js"></script>
 </html>

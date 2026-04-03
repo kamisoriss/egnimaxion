@@ -276,6 +276,141 @@ p {
 .contact-mail:hover {
   color: #ffffff !important; /* Devient blanc quand on passe la souris dessus */
 }
+#controles-volume {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+#bouton-mute { background: none; border: none; cursor: pointer; padding: 0; width: 32px; height: auto; }
+#bouton-mute img.icone { width: 100%; height: auto; display: none; }
+#bouton-mute img.icone.show { display: block; }
+
+#volume-texte {
+  color: #00ffff;
+  font-family: 'Share Tech Mono', sans-serif;
+  font-size: 16px;
+  min-width: 45px;
+  text-align: right;
+  user-select: none;
+}
+
+/* --- LA PISTE --- */
+.curseur-piste {
+  position: relative;
+  display: inline-block; /* S'adapte exactement à la taille de l'image */
+  cursor: pointer;
+  touch-action: none;
+}
+.curseur-piste * {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none;
+}
+
+/* --- LES IMAGES --- */
+img.piste-vide {
+  display: block;
+  width: 150px; /* LA TAILLE DE TA BARRE */
+  height: auto;
+  z-index: 1;
+}
+
+.remplissage-barre {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  clip-path: inset(0 85% 0 0); /* Masque par défaut */
+}
+
+img.barre-pleine {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* S'aligne parfaitement sur la grise */
+}
+
+.curseur-rond {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 15%;
+  height: 24px; /* Taille du rond */
+  width: auto;
+  z-index: 3;
+}
+#volume-texte {
+  color: #00ffff;
+  font-family: 'Share Tech Mono', sans-serif;
+  font-size: 16px;
+  min-width: 45px;
+  text-align: right;
+  user-select: none;
+}
+.btn-row {
+  display: flex;      /* Aligne les enfants horizontalement */
+  gap: 10px;          /* Crée un espace entre le bouton et le lien */
+  margin-top: 15px;   /* Espace par rapport au mot de passe */
+}
+#login-box{
+  position: fixed;
+  right: 3%;
+  top: 5%;
+  z-index: 5;
+}
+#login-open-box-buton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+#login-open-box-buton img {
+  width: 130px;
+  height: auto;
+  filter: drop-shadow(0 0 15px #930101) drop-shadow(0 0 5px rgb(255, 0, 0));
+  transition: all 0.3s ease;
+}
+input[type="submit"], #inscription {
+  background-color: #ffffff; /* Ou ta couleur personnalisée */
+  color: #000000;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  font-family: 'Orbitron', sans-serif;
+  text-decoration: none; /* Enlève le souligné bleu du lien */
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-block;
+}
+#login-open-box {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 15px;
+  width: 250px;
+  background-color: #181b1f;
+  border: 3px solid #930101;
+  box-shadow: 0 0 20px rgb(255, 0, 0);
+  padding: 20px;
+  color: white;
+}
+#inscription{
+  background-color: #dadada;
+
+}
 /* ==========================================================================
    5. RESPONSIVE MOBILE
    ========================================================================== */

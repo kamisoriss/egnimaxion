@@ -55,7 +55,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unloc
         <button class="level1" type="submit" aria-label="Accéder au niveau 2"></button>
     </form>
 </main>
+<div id="controles-volume">
+    <button id="bouton-mute">
+        <img src="../assets/img/soundplay.png" alt="Volume" id="icone-volume-on" class="icone show" draggable="false">
+        <img src="../assets/img/soundstop.png" alt="Mute" id="icone-volume-off" class="icone" draggable="false">
+    </button>
 
+    <div class="curseur-piste" id="volume-piste">
+        <img src="../assets/img/soundbar.png" alt="Piste" class="piste-vide" draggable="false">
+
+        <div class="remplissage-barre" id="remplissage-barre">
+            <img src="../assets/img/soundbarfill.png" alt="Remplissage" class="barre-pleine" draggable="false">
+        </div>
+
+        <img src="../assets/img/soundbarcursor.png" alt="Curseur" class="curseur-rond" id="curseur-rond" draggable="false">
+    </div>
+
+    <span id="volume-texte">15%</span>
+</div>
+
+<footer>
+
+    <ul><li><a class="legal-link" href="../mention_legal.php">Mention légale</a></li></ul>
+</footer>
 <?php if (isset($_GET['dev']) && $_GET['dev'] == '1') : ?>
     <div style="position:fixed;right:12px;bottom:12px;background:#111;color:#efe;padding:12px;border:1px solid #333;z-index:9999;font-family:monospace;">
         <div><strong>DEV</strong></div>
