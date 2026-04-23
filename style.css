@@ -63,7 +63,7 @@ body {
   border-radius: 15px;
   border: 3px solid #00ffff;
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-  max-width: 900px;
+  max-width:85%;
 }
 .enigmatic-nav.collapsible ~ .enigmatic-main {
   margin-left: 100px; /* Menu plié + espace */
@@ -418,5 +418,4 @@ input[type="submit"], #inscription {
   .enigmatic-header h1 { font-size: 1.6em; }
   .enigmatic-header { width: 85%; padding: 5px 15px; min-height: 60px; }
   .enigmatic-nav.collapsible { width: 0; }
-  .nav-toggle { display: none; }
 }

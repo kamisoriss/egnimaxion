@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(isset($_SESSION['username']))
+{
+    header('Location: index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,6 +15,7 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="normalize.css">
     <script src="script/audio.js"></script>
+    <script src="script/box.js"></script>
 </head>
 <body>
 <div class="maze-bg"></div>
@@ -23,12 +31,47 @@ include ('nav.php');
 <main class="enigmatic-main">
 	<h1>Créer un compte</h1>
 	<form class="inscription" action="" method="post">
-		<label>Pseudo<br><input id="username" name="username" type="text" required /></label>
-		<label >Email<br><input id="email" name="email" type="email" required /></label>
-		<label >Mot de passe<br><input id="password" name="password" type="password" required /></label>
-        <label>Confirmation mot de passe<br><input type="password" name="confirm_password" required></label>
-		<button type="submit">S'inscrire</button>
+		<label>Pseudo<input id="username" name="username" type="text" required /></label>
+		<label ><br>Email<input id="email" name="email" type="email" required /></label>
+		<label ><br>Mot de passe<input id="password" name="password" type="password" required /></label>
+        <label><br>Confirmation mot de passe<input type="password" name="confirm_password" required></label>
+		<input type="submit" value="S'inscrire" name="inscrir">
 	</form>
+    <?php
+    require_once('php/bdd.php');
+    $bdd = conexionbdd();
+    if (isset($_POST['inscrir'])) {
+        if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email'])) {
+            if ($_POST['password'] === $_POST['confirm_password']) {
+                $check = $bdd->prepare("SELECT egnim_id_user FROM egnim_compte WHERE egnim_username = ? OR egnim_usermail = ?");
+                $check->execute([$_POST['username'], $_POST['email']]);
+                if ($check->rowCount() > 0) {
+                    echo "Ce compte existe déja";
+                }
+                else {
+                    $hach_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    $request = $bdd->prepare("INSERT INTO egnim_compte (egnim_username, egnim_password_user,egnim_usermail) VALUES (?,?, ?)");
+                    $request->execute([
+                            $_POST['username'],
+                            $hach_password,
+                            $_POST['email']
+                    ]);
+
+                    echo "<p>Compte créé avec succès !</p>";
+                    echo "<script>
+                           setTimeout(function(){
+                               window.location.href = 'index.php';
+                           }, 2000);
+                           </script>";
+                }
+            } else {
+                echo "Les mots de passe ne correspondent pas.";
+            }
+        } else {
+            echo "Veuillez remplir tous les champs.";
+        }
+    }
+    ?>
 </main>
 <div id="controles-volume">
     <button id="bouton-mute">
@@ -52,13 +95,8 @@ include ('nav.php');
 <footer>
 
     <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
+    <ul><li>><a class="legal-link" href="cgu.php">Conditions Générales d'Utilisation</a></li></ul>
 </footer>
 </body>
-</html>
-
-<!-- script navigation -->
 <script src="script/nav.js"></script>
-
-<?php
-
-?>
+</html>

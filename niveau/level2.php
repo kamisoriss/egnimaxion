@@ -5,27 +5,42 @@ session_set_cookie_params([
         'lifetime' => 0,
         'path' => '/',
         'domain' => $_SERVER['HTTP_HOST'],
-        'secure' => $isSecure, // <-- Devient true en HTTPS, et false en HTTP !
+        'secure' => $isSecure,
         'httponly' => true,
-        'samesite' => 'Lax' // 'Lax' est plus souple si tu passes de HTTP à HTTPS
+        'samesite' => 'Lax'
 ]);
 session_start();
-// Si le joueur n'a pas fini le niveau 1, on le renvoie au début
-if (!($_SESSION['level1_completed'] ?? false)) {
-    header('Location: commencer.php');
-    exit;
+if (!isset($_SESSION['username'])) {
+    $timeout = 7200; // 2 heures
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
+        // Trop tard pour l'anonyme : on efface tout et il doit refaire le niveau 1
+        session_unset();
+        session_destroy();
+        header('Location: commencer.php');
+        exit;
+    }
 }
-// 2. LE CHRONOMÈTRE ANTI-TRICHE (ex: 2 heures = 7200 secondes)
-$timeout = 7200;
-if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
-    // S'il s'est écoulé trop de temps, on le vire !
-    session_unset();
-    session_destroy();
-    header('Location: commencer.php');
-    exit;
-}
-// 3. On met à jour l'heure à chaque fois qu'il actualise ou joue
 $_SESSION['last_activity'] = time();
+$acces_autorise = false;
+if (isset($_SESSION['username'])) {
+    require_once('../php/bdd.php');
+    $bdd = conexionbdd();
+    $request = $bdd->prepare("SELECT egnim_save FROM egnim_compte WHERE egnim_username = ?");
+    $request->execute([$_SESSION['username']]);
+    $joueur = $request->fetch();
+    if ($joueur && $joueur['egnim_save'] >= 1) {
+        $acces_autorise = true;
+    }
+}
+else {
+    if (isset($_SESSION['level1_completed']) && $_SESSION['level1_completed'] === true) {
+        $acces_autorise = true;
+    }
+}
+if (!$acces_autorise) {
+    header('Location: commencer.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -75,6 +90,7 @@ include ('../nav.php');
 <footer>
 
     <ul><li><a class="legal-link" href="../mention_legal.php">Mention légale</a></li></ul>
+    <ul><li>><a class="legal-link" href="../cgu.php"></a></li></ul>
 </footer>
 </body>
 <script src="../script/nav.js"></script>

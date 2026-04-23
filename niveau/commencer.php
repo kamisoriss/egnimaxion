@@ -1,32 +1,23 @@
 <?php
-$isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
-
-session_set_cookie_params([
-        'lifetime' => 0,
-        'path' => '/',
-        'domain' => $_SERVER['HTTP_HOST'],
-        'secure' => $isSecure, // <-- Devient true en HTTPS, et false en HTTP !
-        'httponly' => true,
-        'samesite' => 'Lax' // 'Lax' est plus souple si tu passes de HTTP à HTTPS
-]);
 session_start();
-$_SESSION['last_activity'] = time();
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $_SESSION['level1_completed'] = false;
-    // Optionnel : session_destroy(); // Si tu veux vraiment tout effacer
-}
-// --- 1. LE CERVEAU (LOGIQUE DE PASSAGE AU NIVEAU 2) ---
-// On vérifie si le formulaire que tu m'as montré a été envoyé
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unlock') {
 
-    // On vérifie si le token est le bon (Sécurité)
-    if (($_POST['csrf_token'] ?? '') === ($_SESSION['csrf_token'] ?? '')) {
-        $_SESSION['level1_completed'] = true; // On valide le niveau
-        header('Location: level2.php');     // On change de page
-        exit;
-    } else {
-        $error = "Erreur de sécurité (Token)";
-    }
+if (($_POST['csrf_token'] ?? '') === ($_SESSION['csrf_token'] ?? '')) {
+
+$_SESSION['level1_completed'] = true;
+
+if (isset($_SESSION['username'])) {
+require_once('../php/bdd.php');
+$bdd = conexionbdd();
+$update = $bdd->prepare("UPDATE egnim_compte SET egnim_save = 1 WHERE egnim_username = ?");
+$update->execute([$_SESSION['username']]);
+}
+
+header('Location: level2.php');
+exit;
+} else {
+$error = "Erreur de sécurité (Token)";
+}
 }
 ?>
 <!DOCTYPE html>
@@ -77,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unloc
 <footer>
 
     <ul><li><a class="legal-link" href="../mention_legal.php">Mention légale</a></li></ul>
+    <ul><li>><a class="legal-link" href="../cgu.php"></a></li></ul>
 </footer>
 <?php if (isset($_GET['dev']) && $_GET['dev'] == '1') : ?>
     <div style="position:fixed;right:12px;bottom:12px;background:#111;color:#efe;padding:12px;border:1px solid #333;z-index:9999;font-family:monospace;">

@@ -1,3 +1,31 @@
+<?php
+session_start();
+require_once ('php/bdd.php');
+$bdd = conexionbdd();
+$message_erreur = "";
+if (isset($_POST['disconnect'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
+if (isset($_POST['validé'])) {
+    if (!empty($_POST['username']) && !empty($_POST['password'])) {
+        $request = $bdd->prepare("select * from egnim_compte where egnim_username = ?");
+        $request->execute(array($_POST['username']));
+        $requestresult = $request->fetch();
+
+        if ($requestresult && password_verify($_POST['password'], $requestresult['egnim_password_user'])) {
+            $_SESSION['username'] = $requestresult['egnim_username'];
+            header("Location: index.php");
+            exit;
+        } else {
+            $message_erreur = "<p style='color:red;'>Identifiant ou mot de passe incorrect</p>";
+        }
+    } else {
+        $message_erreur = "<p style='color:red;'>Veuillez remplir toutes les cases</p>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,14 +49,40 @@
 <div id="login-box">
     <button id="login-open-box-buton"><img src="assets/img/log-login.png" alt="logo-login"></button>
     <div id="login-open-box">
-        <p>Connexion</p>
-        <form method="post">
-            <label>identifiant:<input type="text" name="username"></label>
-            <label>mot de passe:<input type="password" name="password"></label>
-            <div class="btn-row">
-            <input type="submit" name="validé" value="connexion"><a href="inscription.php" id="inscription">s'inscrir</a>
+        <?php
+        if (isset($_SESSION['username'])) {
+            echo "<p>Connecté en tant que :</p><p style='color:#00ffff; font-size:1.2em;'>" . htmlspecialchars($_SESSION['username']) . "</p>";
+            echo "<form method='post'><br><button name='disconnect'>Déconnexion</button></form>";
+        }
+        else {
+            ?>
+            <div id="form-login">
+                <p>Connexion</p>
+                <?= $message_erreur ?>
+                <form method="post">
+                    <label>identifiant:<input type="text" name="username"></label>
+                    <label>mot de passe:<input type="password" name="password"></label>
+                    <div class="btn-row">
+                        <input type="submit" name="validé" value="connexion">
+                        <a href="inscription.php" id="inscription">s'inscrire</a>
+                        <button type="button" id="forgetpassword">mot de passe oublié</button>
+                    </div>
+                </form>
             </div>
-        </form>
+            <div id="forgetpasswordbox" style="display: none;">
+                <p>Réinitialiser le mot de passe</p>
+                <div id="message-retour"></div>
+                <form method="post" id="password-reset">
+                    <label>Votre email:<input type="email" name="email" required></label>
+                    <div class="btn-row">
+                        <input type="submit" name="reset" value="Envoyer">
+                        <button type="button" id="connexionbox">connexion</button>
+                    </div>
+                </form>
+            </div>
+            <?php
+        }
+        ?>
     </div>
 </div>
 <?php
@@ -63,6 +117,7 @@ include ('nav.php');
 <footer>
 
     <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
+    <ul><li>><a class="legal-link" href="cgu.php">Conditions Générales d'Utilisation</a></li></ul>
 </footer>
 
 <script src="script/nav.js"></script>
