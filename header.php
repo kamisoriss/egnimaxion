@@ -47,9 +47,7 @@ if (isset($_POST['validé'])) {
 ?>
     <!DOCTYPE html>
     <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>        <meta charset="UTF-8">        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= $titre_page ?></title>
         <link rel="stylesheet" href="<?= $chemin ?>normalize.css">
         <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
