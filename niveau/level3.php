@@ -10,12 +10,12 @@
 $isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
 
 session_set_cookie_params([
-        'lifetime' => 0,
-        'path' => '/',
-        'domain' => $_SERVER['HTTP_HOST'],
-        'secure' => $isSecure,
-        'httponly' => true,
-        'samesite' => 'Lax'
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => $_SERVER['HTTP_HOST'],
+    'secure' => $isSecure,
+    'httponly' => true,
+    'samesite' => 'Lax'
 ]);
 session_start();
 if (!isset($_SESSION['username'])) {
@@ -36,66 +36,47 @@ if (isset($_SESSION['username'])) {
     $request = $bdd->prepare("SELECT egnim_save FROM egnim_compte WHERE egnim_username = ?");
     $request->execute([$_SESSION['username']]);
     $joueur = $request->fetch();
-    if ($joueur && $joueur['egnim_save'] >= 2) {
+    if ($joueur && $joueur['egnim_save'] >= 3) {
         $acces_autorise = true;
     }
 }
 else {
-    if (isset($_SESSION['level1_completed']) && $_SESSION['level1_completed'] === true) {
+    if (isset($_SESSION['level2_completed']) && $_SESSION['level2_completed'] === true) {
         $acces_autorise = true;
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'unlock') {
 
-    if (($_POST['csrf_token'] ?? '') === ($_SESSION['csrf_token'] ?? '')) {
+if (($_POST['csrf_token'] ?? '') === ($_SESSION['csrf_token'] ?? '')) {
 
-        $_SESSION['level2_completed'] = true;
+    $_SESSION['level3_completed'] = true;
 
-        if (isset($_SESSION['username'])) {
-            require_once('../php/bdd.php');
-            $bdd = conexionbdd();
-            $update = $bdd->prepare("UPDATE egnim_compte SET egnim_save = 3 WHERE egnim_username = ?");
-            $update->execute([$_SESSION['username']]);
-        }
-
-        header('Location: level3.php');
-        exit;
-    } else {
-        $error = "Erreur de sécurité (Token)";
+    if (isset($_SESSION['username'])) {
+        require_once('../php/bdd.php');
+        $bdd = conexionbdd();
+        $update = $bdd->prepare("UPDATE egnim_compte SET egnim_save = 4 WHERE egnim_username = ?");
+        $update->execute([$_SESSION['username']]);
     }
-}
+
+    header('Location: level4.php');
+}else {
+    $error = "Erreur de sécurité (Token)";
+}}
 if (!$acces_autorise) {
     header('Location: commencer.php');
     exit;
 }
-$titre_page = "Niveau 2 - EGNIMAXION";
-$titre_header = "level 2";
+$titre_page = "Niveau 3 - EGNIMAXION";
+$titre_header = "level 3";
 $chemin = "../";
 $cacher_login = true;
 include '../header.php';
 ?>
-  <main class="enigmatic-main">
-    <h1>Niveau 2</h1>
-    <p>Bienvenue au niveau 2 </p>
-      <p class="texte-mystere">
-          Tout commence dans l'obscurité la plus totale. Avance avec prudence, car chaque détail compte.
-          <br>Ton esprit est ta seule véritable arme ici. La vérité se cache souvent juste sous tes yeux.
-          <br>Méfie-toi des illusions qui tentent de te tromper.
-          <br>Seuls les plus attentifs verront le chemin se dessiner.
-          <br>Tout indice, même le plus infime, a son importance.
-          <br>Prends le temps d'analyser chaque recoin de cette pièce.
-          <br>Parfois, reculer permet de mieux voir l'ensemble.
-          <br>Au-delà des apparences, un code attend d'être révélé.
-          <br>Laisse ton intuition te guider vers la bonne réponse.
-          <br>Sauras-tu déchiffrer le message avant qu'il ne soit trop tard ?
-      </p>
-      <form method="POST" >
-          <input type="hidden" name="action" value="unlock">
-          <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES) ?>">
-          <label><input type="text"></label>
-          <input type="submit" aria-label="Accéder au niveau 3">
-      </form>
-  </main>
+<main class="enigmatic-main">
+    <h1>Niveau 3</h1>
+    <p>Bienvenue au niveau 3 </p>
+
+</main>
 <div id="controles-volume">
     <button id="bouton-mute">
         <img src="../assets/img/soundplay.png" alt="Volume" id="icone-volume-on" class="icone show" draggable="false">

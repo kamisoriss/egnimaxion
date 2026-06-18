@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+ *
+ * Ce fichier fait partie du projet Egnimaxion.
+ * Toute reproduction, distribution, modification ou utilisation
+ * non autorisée de ce code est strictement interdite.
+ */
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 

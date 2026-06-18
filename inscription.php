@@ -1,32 +1,18 @@
 <?php
+/*
+ * Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+ *
+ * Ce fichier fait partie du projet Egnimaxion.
+ * Toute reproduction, distribution, modification ou utilisation
+ * non autorisée de ce code est strictement interdite.
+ */
+
 session_start();
 if(isset($_SESSION['username']))
 {
     header('Location: index.php');
 }
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Inscription - EGNIMAXION</title>
-<link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="normalize.css">
-    <script src="script/audio.js"></script>
-    <script src="script/box.js"></script>
-</head>
-<body>
-<div class="maze-bg"></div>
-<header class="enigmatic-header">
-    <span class="header-bg-puzzle">
-        <audio id="musique-fond" src="assets/sound/egnimaxion_backsound.mp3" loop></audio>
-    </span>
-        <h1>inscription</h1>
-    </header>
-<?php
-include ('nav.php');
+include 'header.php';
 ?>
 <main class="enigmatic-main">
 	<h1>Créer un compte</h1>
@@ -93,9 +79,7 @@ include ('nav.php');
 </div>
 
 <footer>
-
-    <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
-    <ul><li>><a class="legal-link" href="cgu.php">Conditions Générales d'Utilisation</a></li></ul>
+    <?php include 'footer.php'; ?>
 </footer>
 </body>
 <script src="script/nav.js"></script>

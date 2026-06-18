@@ -6,9 +6,11 @@
  * Toute reproduction, distribution, modification ou utilisation
  * non autorisée de ce code est strictement interdite.
  */
-
 session_start();
 require_once ('php/bdd.php');
+/**
+ *
+ */
 $bdd = conexionbdd();
 $message_erreur = "";
 if (isset($_POST['disconnect'])) {
@@ -33,36 +35,31 @@ if (isset($_POST['validé'])) {
         $message_erreur = "<p style='color:red;'>Veuillez remplir toutes les cases</p>";
     }
 }
-include 'header.php';
+if (isset($_SESSION['username'])) {
+
+
+    $reqsave = $bdd->prepare("select * from egnim_compte where egnim_username = ?");
+    $reqsave->execute(array($_SESSION['username']));
+    $reqsavefetch = $reqsave->fetch(PDO::FETCH_ASSOC);
+    if ($reqsavefetch) {
+        $requestresult = $reqsavefetch['egnim_save'];
+        if ($requestresult == 1) {
+            header("Location: niveau/commencer.php");
+            exit();
+
+    }elseif ($requestresult == 2)
+    {
+        header('Location: niveau/level2.php');
+        exit();
+    }
+    elseif ($requestresult == 3)
+    {
+        header('Location: niveau/level3.php');
+        exit();
+    }
+    }
+}else{
+    header("Location: index.php");
+    exit();
+}
 ?>
-<main class="enigmatic-main">
-</main>
-<div id="controles-volume">
-    <button id="bouton-mute">
-        <img src="assets/img/soundplay.png" alt="Volume" id="icone-volume-on" class="icone show" draggable="false">
-        <img src="assets/img/soundstop.png" alt="Mute" id="icone-volume-off" class="icone" draggable="false">
-    </button>
-
-    <div class="curseur-piste" id="volume-piste">
-        <img src="assets/img/soundbar.png" alt="Piste" class="piste-vide" draggable="false">
-
-        <div class="remplissage-barre" id="remplissage-barre">
-            <img src="assets/img/soundbarfill.png" alt="Remplissage" class="barre-pleine" draggable="false">
-        </div>
-
-        <img src="assets/img/soundbarcursor.png" alt="Curseur" class="curseur-rond" id="curseur-rond" draggable="false">
-    </div>
-
-    <span id="volume-texte">15%</span>
-</div>
-
-<footer>
-
-    <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
-    <ul><li>><a class="legal-link" href="cgu.php">Conditions Générales d'Utilisation</a></li></ul>
-</footer>
-</body>
-</html>
-
-<!-- script navigation -->
-<script src="script/nav.js"></script>

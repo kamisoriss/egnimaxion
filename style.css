@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+ *
+ * Ce fichier fait partie du projet Egnimaxion.
+ * Toute reproduction, distribution, modification ou utilisation
+ * non autorisée de ce code est strictement interdite.
+ */
+
 /* ==========================================================================
    1. BASE ET MISE EN PAGE
    ========================================================================== */
@@ -116,7 +124,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-image: url('assets/img/maze-bg.jpg');
-  background-repeat: no-repeat;
+  /*background-repeat: no-repeat;*/
   background-position: center;
   /* Fini le zoom géant ! L'image prend 100% de la HAUTEUR de l'écran */
   background-size: auto 100%;
@@ -364,26 +372,44 @@ img.barre-pleine {
   gap: 10px;          /* Crée un espace entre le bouton et le lien */
   margin-top: 15px;   /* Espace par rapport au mot de passe */
 }
-#login-box{
+/* 0. Il faut rendre le bouton lui-même totalement transparent ! */
+/* --- LA BOÎTE DE CONNEXION (Fixée en haut à droite) --- */
+#login-box {
   position: fixed;
   right: 3%;
   top: 5%;
   z-index: 5;
 }
+
+/* 0. Le bouton transparent qui englobe l'image */
 #login-open-box-buton {
-  background: none;
+  background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
   outline: none;
 }
-#login-open-box-buton img {
+
+/* 1. Uniquement pour la pièce de puzzle par défaut */
+#login-open-box-buton .logo-puzzle {
   width: 130px;
   height: auto;
   filter: drop-shadow(0 0 15px #930101) drop-shadow(0 0 5px rgb(255, 0, 0));
   transition: all 0.3s ease;
 }
-input[type="submit"], #inscription {
+
+/* 2. Uniquement pour l'avatar Google (Carré avec ombre pure) */
+#login-open-box-buton .avatar-google {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 15px #930101, 0 0 5px rgb(255, 0, 0);
+  object-fit: cover;
+  filter: none !important;
+  transition: all 0.3s ease;
+}
+input[type="submit"], #inscription, #google-login {
   background-color: #ffffff; /* Ou ta couleur personnalisée */
   color: #000000;
   border: 1px solid #ccc;
@@ -411,7 +437,26 @@ input[type="submit"], #inscription {
   background-color: #dadada;
 
 }
-/* ==========================================================================
+html, body, .enigmatic-main, .maze-bg {
+  user-select: none;
+  -webkit-user-select: none;
+}
+p, h1, h2, li, span {
+  user-select: text;
+  -webkit-user-select: text;
+}
+*{
+  cursor: url("assets/img/egnimaxion_cursor.png") 32 0, default !important;
+
+}
+a, a *, button, button *, input, .nav-btn-link, .nav-btn-link * {
+  cursor: url("assets/img/egnimaxion_cursor_link.png") 10 5, auto !important;
+}
+
+*:active, *:active * {
+  cursor: url("assets/img/egnimaxion_cursor_click.png") 32 0, auto !important;
+}
+/* =========================================================================
    5. RESPONSIVE MOBILE
    ========================================================================== */
 @media (max-width: 768px) {

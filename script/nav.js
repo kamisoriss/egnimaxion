@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+ *
+ * Ce fichier fait partie du projet Egnimaxion.
+ * Toute reproduction, distribution, modification ou utilisation
+ * non autorisée de ce code est strictement interdite.
+ */
+
 // nav.js
 // Gestion de la navigation latérale (ouverture/fermeture, épinglage, hover intent)
 // Commentaires en français ajoutés pour faciliter la lecture et la maintenance.

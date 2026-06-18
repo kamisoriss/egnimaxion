@@ -1,3 +1,11 @@
+<!--
+  - Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+  -
+  - Ce fichier fait partie du projet Egnimaxion.
+  - Toute reproduction, distribution, modification ou utilisation
+  - non autorisée de ce code est strictement interdite.
+  -->
+
 <svg width="340" height="100" viewBox="0 0 340 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <!-- Pièces puzzle principales -->
     <path d="M30 20 q-10 10 0 20 q10 10 20 0 q-5 -5 0 -10 q5 -5 0 -10 q-10 -10 -20 0 Z" fill="#23262a" stroke="#444" stroke-width="2.5" opacity="0.45"/>

@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+ *
+ * Ce fichier fait partie du projet Egnimaxion.
+ * Toute reproduction, distribution, modification ou utilisation
+ * non autorisée de ce code est strictement interdite.
+ */
+
 session_start();
 require_once ('php/bdd.php');
 $bdd = conexionbdd();
@@ -25,68 +33,7 @@ if (isset($_POST['validé'])) {
         $message_erreur = "<p style='color:red;'>Veuillez remplir toutes les cases</p>";
     }
 }
-?>
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="normalize.css">
-    <link href="https://fonts.googleapis.com/css2?family=Unica+One&family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="script/audio.js"></script>
-    <script src="script/box.js"></script>
-    <title>mention légal</title>
-</head>
-<body>
-<div class="maze-bg"></div>
-<header class="enigmatic-header">
-    <span class="header-bg-puzzle">
-        <audio id="musique-fond" src="assets/sound/egnimaxion_backsound.mp3" loop></audio>
-    </span>
-    <h1>EGNIMAXION</h1>
-</header>
-<div id="login-box">
-    <button id="login-open-box-buton"><img src="assets/img/log-login.png" alt="logo-login"></button>
-    <div id="login-open-box">
-        <?php
-        if (isset($_SESSION['username'])) {
-            echo "<p>Connecté en tant que :</p><p style='color:#00ffff; font-size:1.2em;'>" . htmlspecialchars($_SESSION['username']) . "</p>";
-            echo "<form method='post'><br><button name='disconnect'>Déconnexion</button></form>";
-        }
-        else {
-            ?>
-            <div id="form-login">
-                <p>Connexion</p>
-                <?= $message_erreur ?>
-                <form method="post">
-                    <label>identifiant:<input type="text" name="username"></label>
-                    <label>mot de passe:<input type="password" name="password"></label>
-                    <div class="btn-row">
-                        <input type="submit" name="validé" value="connexion">
-                        <a href="inscription.php" id="inscription">s'inscrire</a>
-                        <button type="button" id="forgetpassword">mot de passe oublié</button>
-                    </div>
-                </form>
-            </div>
-            <div id="forgetpasswordbox" style="display: none;">
-                <p>Réinitialiser le mot de passe</p>
-                <div id="message-retour"></div>
-                <form method="post" id="password-reset">
-                    <label>Votre email:<input type="email" name="email" required></label>
-                    <div class="btn-row">
-                        <input type="submit" name="reset" value="Envoyer">
-                        <button type="button" id="connexionbox">connexion</button>
-                    </div>
-                </form>
-            </div>
-            <?php
-        }
-        ?>
-    </div>
-</div>
-<?php
-include ('nav.php');
+include 'header.php';
 ?>
 <main class="enigmatic-main">
     <div class="legal-box">
@@ -143,9 +90,7 @@ include ('nav.php');
 </div>
 
 <footer>
-
-    <ul><li><a class="legal-link" href="mention_legal.php">Mention légale</a></li></ul>
-    <ul><li>><a class="legal-link" href="cgu.php">Conditions Générales d'Utilisation</a></li></ul>
+    <?php include 'footer.php'; ?>
 </footer>
 <script src="script/nav.js"></script>
 </html>

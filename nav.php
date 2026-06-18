@@ -1,4 +1,12 @@
 <?php
+/*
+ * Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+ *
+ * Ce fichier fait partie du projet Egnimaxion.
+ * Toute reproduction, distribution, modification ou utilisation
+ * non autorisée de ce code est strictement interdite.
+ */
+
 // 1. On récupère le chemin du dossier actuel (ex: /niveau ou /admin/settings)
 $directory = trim(dirname($_SERVER['SCRIPT_NAME']), '/');
 
@@ -22,6 +30,9 @@ $root = str_repeat('../', $depth);
         </a>
         <a href="<?= $root ?>niveau/commencer.php" class="nav-btn-link" title="Commencer">
             <span class="nav-icon">🧩</span><span>Commencer</span>
+        </a>
+        <a href="<?= $root ?>reprendre.php" class="nav-btn-link" title="Commencer">
+            <span class="nav-icon">🧩</span><span>Reprendre</span>
         </a>
         <a href="<?= $root ?>boutique.php" class="nav-btn-link" title="Boutique">
             <span class="nav-icon">🛒</span><span>Boutique</span>

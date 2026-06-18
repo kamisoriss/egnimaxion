@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2026 EGNIMAXION. Tous droits réservés.
+ *
+ * Ce fichier fait partie du projet Egnimaxion.
+ * Toute reproduction, distribution, modification ou utilisation
+ * non autorisée de ce code est strictement interdite.
+ */
+
 const formReset = document.getElementById("password-reset");
 const messageRetour = document.getElementById("message-retour");
 
